@@ -1,4 +1,4 @@
-package game;
+package Virus.game;
 
 import java.awt.Button;
 import java.awt.Color;

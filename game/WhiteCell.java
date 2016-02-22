@@ -1,4 +1,4 @@
-package game;
+package Virus.game;
 
 import java.awt.Color;
 import java.awt.Point;

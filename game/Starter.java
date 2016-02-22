@@ -1,4 +1,4 @@
-package game;
+package Virus.game;
 
 public class Starter {
 	private static Difficulty d;

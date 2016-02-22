@@ -1,4 +1,4 @@
-package game;
+package Virus.game;
 
 public enum Difficulty {
 	EASY,
