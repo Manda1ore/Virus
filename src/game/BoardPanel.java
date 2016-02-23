@@ -37,9 +37,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 			reds.add(new RedCells());
 			reds.get(i).setSize(d);
 			reds.get(i).setSpeed(d);
-			redCells[i] = new RedCells();
-			redCells[i].setSize(d);
-			redCells[i].setSpeed(d);
 		}
 		whiteCell = new WhiteCell();
 		whiteCell.setSize(d);
@@ -64,8 +61,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 					//red collide with red
 					reds.get(j).setHit(reds.get(l).getCenterX(),
 							reds.get(l).getCenterY(), reds.get(l).getRadius());
-					//redCells[j].setHit(redCells[l].getCenterX(),
-						//	redCells[l].getCenterY(), redCells[l].getRadius());
 					for (int i = 0; i < viruses.length; i++) {
 						for (int c = 0; c < viruses.length; c++) {
 							//virus collisions with virus
@@ -81,26 +76,19 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 						//red collide with virus
 						reds.get(j).setHit(virus.get(i).getCenterX(), virus.get(i)
 								.getCenterY(), virus.get(i).getRadius());
-						//redCells[j].setHit(virus.get(i).getCenterX(), virus.get(i)
-							//	.getCenterY(), virus.get(i).getRadius());
 						//virus collide with red
-						virus.get(i).setHit(redCells[j].getCenterX(),
-								redCells[j].getCenterY(), 60);
+						virus.get(i).setHit(reds.get(j).getCenterX(),
+								reds.get(j).getCenterY(), 60);
 						//virus collide with player
 						virus.get(i).setHit(whiteCell.getCenterX(),
 								whiteCell.getCenterY(), whiteCell.getRadius());
-//						if(virus.get(i).didHit){
-//							virus.remove(i);
-//						}
+
 						//red collide with player
 						reds.get(j).setHit(whiteCell.getCenterX(),
 								whiteCell.getCenterY(), whiteCell.getRadius());
-						//redCells[i].setHit(whiteCell.getCenterX(),
-							//	whiteCell.getCenterY(), whiteCell.getRadius());
 					}
 				}
 				reds.get(l).move();
-				//redCells[l].move();
 			}
 			for (int j = 0; j < viruses.length; j++) {				
 				virus.get(j).move();
@@ -121,20 +109,13 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		}
 		for (int i = 0; i < redCells.length; i++) {
 			g.setColor(Color.black);
-			g.drawOval(redCells[i].getLocation().x,
-					redCells[i].getLocation().y, redCells[i].getSize(),
-					redCells[i].getSize());
 			g.drawOval(reds.get(i).getLocation().x,
 					reds.get(i).getLocation().y, reds.get(i).getSize(),
 					reds.get(i).getSize());
-			g.setColor(redCells[i].getColor());
+			g.setColor(reds.get(i).getColor());
 			g.fillOval(reds.get(i).getLocation().x,
 					reds.get(i).getLocation().y, reds.get(i).getSize(),
 					reds.get(i).getSize());
-			g.fillOval(redCells[i].getLocation().x,
-					redCells[i].getLocation().y, redCells[i].getSize(),
-					redCells[i].getSize());
-
 		}
 		g.setColor(Color.black);
 		g.drawOval(whiteCell.getLocation().x, whiteCell.getLocation().y,
