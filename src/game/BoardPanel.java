@@ -14,7 +14,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Cells[] redCells = new RedCells[30];
+	private Cells[] redCells = new RedCells[20];
 	private Cells[] viruses = new Virus[10];
 	private ArrayList<Cells> virus = new ArrayList<Cells>();
 	private Cells whiteCell;
@@ -29,10 +29,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	public void objectInfo(Difficulty d) {
 		for (int i = 0; i < viruses.length; i++) {
 			virus.add(new Virus());
-			virus.indexOf(i);
-			viruses[i] = new Virus();
-			viruses[i].setSize(d);
-			viruses[i].setSpeed(d);
+			virus.get(i).setSize(d);
+			virus.get(i).setSpeed(d);
 		}
 		for (int i = 0; i < redCells.length; i++) {
 			redCells[i] = new RedCells();
@@ -53,32 +51,55 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		}
 		for (;;) {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			for (int j = 0; j < redCells.length; j++) {
-				redCells[j].move();
+			for (int l = 0; l < redCells.length; l++) {
+				for (int j = 0; j < redCells.length; j++) {
+					redCells[j].setHit(redCells[l].getCenterX(),
+							redCells[l].getCenterY(), redCells[l].getRadius());
+					for (int i = 0; i < viruses.length; i++) {
+						for (int c = 0; c < viruses.length; c++) {
+							virus.get(c)
+									.setHit(virus.get(i).getCenterX(),
+											virus.get(i).getCenterY(),
+											virus.get(i).getRadius());
+							virus.get(c).setHit(whiteCell.getCenterX(),
+									whiteCell.getCenterY(), 100);
+
+						}
+						redCells[j].setHit(virus.get(i).getCenterX(), virus.get(i)
+								.getCenterY(), virus.get(i).getRadius());
+						virus.get(i).setHit(redCells[j].getCenterX(),
+								redCells[j].getCenterY(), 60);
+						virus.get(i).setHit(whiteCell.getCenterX(),
+								whiteCell.getCenterY(), whiteCell.getRadius());
+						if(virus.get(i).didHit){
+							virus.remove(i);
+						}
+						redCells[i].setHit(whiteCell.getCenterX(),
+								whiteCell.getCenterY(), whiteCell.getRadius());
+					}
+				}
+				redCells[l].move();
 			}
-			for (int i = 0; i < viruses.length; i++) {
-				viruses[i].move();
+			for (int j = 0; j < viruses.length; j++) {				
+				virus.get(j).move();
 			}
 			repaint();
-
 		}
 	}
-//
+
 	public void paint(Graphics g) {
-		// System.out.println("Painting BoardPanel...");
-		
 		g.clearRect(0, 0, 2100, 1000);
 		g.setColor(new Color(158, 17, 74));
 		g.fillRect(0, 0, 2100, 1000);
 		for (int i = 0; i < viruses.length; i++) {
-			
-			g.setColor(viruses[i].getColor());
-			g.fillRect(viruses[i].getLocation().x, viruses[i].getLocation().y,
-					viruses[i].getSize(), viruses[i].getSize());
+			g.setColor(virus.get(i).getColor());
+			g.fillRect(virus.get(i).getLocation().x,
+					virus.get(i).getLocation().y, virus.get(i).getSize(), virus
+							.get(i).getSize());
 		}
 		for (int i = 0; i < redCells.length; i++) {
 			g.setColor(Color.black);
@@ -112,6 +133,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		whiteCell.setLocation(new Point(e.getX() - (whiteCell.getSize() / 2), e
 				.getY() - (whiteCell.getSize() / 2)));
+		whiteCell.setCenter();
 	}
 
 }

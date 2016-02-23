@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Point;
 
 public class Virus extends Cells{
-
-
+	
+	public Virus(){
+		
+	}
 	@Override
 	public int getSize() {
 		return size;
@@ -30,10 +32,23 @@ public class Virus extends Cells{
 	}
 
 	@Override
-	public void hit(Point p, int size) {
-		// TODO Auto-generated method stub
+	public void setHit(double centerY, double centerX, int radius) {
 		
+		int distance = (int) place.distance(centerX, centerY);
+		if(distance <= this.radius + radius){
+//			xSpeed = -xSpeed;
+			didHit = true;			
+		}else{
+			didHit = false;
+		}
 	}
+	@Override
+	public boolean react() {
+		// TODO Auto-generated method stub
+		return didHit;
+	}
+
+	
 
 
 }

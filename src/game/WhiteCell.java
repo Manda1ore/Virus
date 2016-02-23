@@ -35,19 +35,28 @@ public class WhiteCell extends Cells{
 	public void setSpeed(Difficulty d) {
 		
 	}
+	@Override
 	public void setLocation(Point p) {
 		place = new Point(p);
 	}
-	@Override
+	
 	public void setLocation() {
 		place = new Point(400, 500);
 	}
 
 	@Override
-	public void hit(Point p, int size) {
-		
+	public void setHit(double centerY, double centerX, int radius) {
+		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean react() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	 
 	
 	
 }
