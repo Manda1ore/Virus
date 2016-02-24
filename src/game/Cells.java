@@ -30,8 +30,8 @@ public abstract class Cells implements Hitter, Shape{
 
 	public void setSpeed(Difficulty d) {
 		if (d.equals(Difficulty.EASY)) {
-			xSpeed = ran.nextInt(4) - 2;
-			ySpeed = ran.nextInt(3) + 1;
+			xSpeed = ran.nextInt(7) - 4;
+			ySpeed = ran.nextInt(6) + 1;
 		} else if (d.equals(Difficulty.MEDIUM)) {
 			xSpeed = ran.nextInt(15) - 7;
 			ySpeed = ran.nextInt(6) + 1;
@@ -72,21 +72,20 @@ public abstract class Cells implements Hitter, Shape{
 	}
 
 	public void move() {
-		if (place.getLocation().y > 1000 - (getSize())) {
+		if (place.getLocation().y > 900 - (getSize())) {
 			place.setLocation(place.getLocation().x, 0);
 		}
-		if (place.getLocation().x > 2100 - (getSize())) {
+		if (place.getLocation().x > 1900 - (getSize())) {
 			place.setLocation(0, place.getLocation().y);
 		}
 		if (place.getLocation().x < 0) {
-			place.setLocation(2100 - (getSize()), place.getLocation().y);
+			place.setLocation(1900 - (getSize()), place.getLocation().y);
 		}
 		if (place.getLocation().y < 0) {
-			place.setLocation(place.getLocation().y, 1000 - (getSize()));
+			place.setLocation(place.getLocation().y, 900 - (getSize()));
 		}
 		if (react()){
 			xSpeed = -xSpeed;
-			System.out.println("hit something");
 		}
 		centerX = place.getX() + radius;
 		centerY = place.getY() + radius;

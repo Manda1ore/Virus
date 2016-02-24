@@ -1,10 +1,13 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -19,28 +22,33 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	private ArrayList<Cells> virus = new ArrayList<Cells>();
 	private Cells whiteCell;
 	private int nViruses = 10;
-
+	private int nBloodCells = 10;
+	Difficulty d;
 	public BoardPanel(Difficulty d) {
 		setLayout(null);
 		objectInfo(d);
-		this.setBounds(0, 0, 2100, 1000);
+		this.setBounds(0, 0, 1925, 900);
 		this.addMouseMotionListener(this);
+		this.d = Difficulty.EASY;
 	}
 
 	public void objectInfo(Difficulty d) {
-		for (int i = 0; i < nViruses ; i++) {
+		for (int i = 0; i < nViruses; i++) {
 			virus.add(new Virus());
-			virus.get(i).setSize(d);
-			virus.get(i).setSpeed(d);
+			cellSettings(d, virus.get(i));
 		}
-		for (int i = 0; i < redCells.length; i++) {
+		for (int i = 0; i < nBloodCells; i++) {
 			reds.add(new RedCells());
-			reds.get(i).setSize(d);
-			reds.get(i).setSpeed(d);
+			cellSettings(d, reds.get(i));
 		}
 		whiteCell = new WhiteCell();
 		whiteCell.setSize(d);
 
+	}
+
+	public void cellSettings(Difficulty d, Cells cell) {
+		cell.setSize(d);
+		cell.setSpeed(d);
 	}
 
 	public void animation() {
@@ -56,97 +64,97 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			for (int l = 0; l < redCells.length; l++) {
-				for (int j = 1; j < redCells.length; j++) {
+			for (int l = 0; l < reds.size(); l++) {
+				for (int j = 1; j < reds.size(); j++) {
 					// red collide with red
-					reds.get(j).setHit(reds.get(l).getCenterX(),
-							reds.get(l).getCenterY(), reds.get(l).getRadius());
-					for (int i = 0; i < nViruses; i++) {
-						for (int c = i; c < nViruses; c++) {
+					collisions(reds.get(l), reds.get(j));
+					for (int i = 0; i < virus.size(); i++) {
+						for (int c = 1; c < virus.size(); c++) {
 							// virus collisions with virus
-							virus.get(c).intersects(
-									virus.get(c).getLocation().x,
-									virus.get(c).getLocation().y,
-									virus.get(c).getSize(),
-									virus.get(c).getSize());
-
+							collisions(virus.get(i), virus.get(c));
 						}
 						// red collide with virus
-						reds.get(j).intersects(
-								virus.get(i).getLocation().x,
-								virus.get(i).getLocation().y,
-								virus.get(i).getSize(),
-								virus.get(i).getSize());
+						collisions(reds.get(j), virus.get(i));
 						// virus collide with red
-						virus.get(i).intersects(
-								reds.get(l).getLocation().x,
-								reds.get(l).getLocation().y,
-								reds.get(l).getSize(),
-								reds.get(l).getSize());
+						collisions(virus.get(i), reds.get(l));
 						// virus collide with player
-						virus.get(i).intersects(
-								whiteCell.getLocation().x,
-								whiteCell.getLocation().y,
-								whiteCell.getSize(),
-								whiteCell.getSize());
-
+						collisions(virus.get(i), whiteCell);
 						// red collide with player
-						reds.get(j).intersects(
-								whiteCell.getLocation().x,
-								whiteCell.getLocation().y,
-								whiteCell.getSize(),
-								whiteCell.getSize());
+						collisions(reds.get(l), whiteCell);
+						levelFactor(i);
 					}
 				}
 				reds.get(l).move();
 			}
-			for (int j = 0; j < nViruses; j++) {
+			for (int j = 0; j < virus.size(); j++) {
 				virus.get(j).move();
-				
-				
-			}
-			for (int i = 0; i < nViruses; i++) {
-				if(virus.get(i).react()){
-					virus.remove(i);
-					nViruses--;
-					if(nViruses == 0){
-						objectInfo(Difficulty.EASY);
-						nViruses = 15;
-						
-					}
-				}
 			}
 			repaint();
 		}
+	}
+
+	public void levelFactor(int i) {
+		if (virus.get(i).react()) {
+			virus.remove(i);
+			if (virus.size() == 0) {
+				System.out.println("last virus caught");			
+				if (nViruses < 16) {
+					virus.removeAll(virus);
+					nViruses += 2;
+					objectInfo(d);					
+				} else if (nBloodCells < 19) {
+					reds.removeAll(reds);
+					nBloodCells += 3;
+					objectInfo(d);
+				} else if (nViruses >= 16 && nBloodCells >= 19){
+					difficultyIncrease();
+				} 
+			}
+		}
+	}
+
+	public void difficultyIncrease() {
+		reds.removeAll(reds);
+		nViruses = 10;
+		nBloodCells = 10;
+		if(d.equals(Difficulty.EASY)){
+			d = Difficulty.MEDIUM;
+		}else if(d.equals(Difficulty.MEDIUM)){
+			d = Difficulty.HARD;
+		}else if(d.equals(Difficulty.HARD)){
+		}
+		objectInfo(d);
+	}
+
+	public void collisions(Cells cell, Cells cell2) {
+		cell.intersects(cell2.getLocation().x, cell2.getLocation().y,
+				cell2.getSize(), cell2.getSize());
 	}
 
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, 2100, 1000);
 		g.setColor(new Color(158, 17, 74));
 		g.fillRect(0, 0, 2100, 1000);
-		for (int i = 0; i < nViruses; i++) {
+		for (int i = 0; i < virus.size(); i++) {
 			g.setColor(virus.get(i).getColor());
 			g.fillRect(virus.get(i).getLocation().x,
 					virus.get(i).getLocation().y, virus.get(i).getSize(), virus
 							.get(i).getSize());
 		}
-		for (int i = 0; i < redCells.length; i++) {
-			g.setColor(Color.black);
-			g.drawOval(reds.get(i).getLocation().x,
-					reds.get(i).getLocation().y, reds.get(i).getSize(), reds
-							.get(i).getSize());
-			g.setColor(reds.get(i).getColor());
-			g.fillOval(reds.get(i).getLocation().x,
-					reds.get(i).getLocation().y, reds.get(i).getSize(), reds
-							.get(i).getSize());
+		for (int i = 0; i < reds.size(); i++) {
+			drawCells(g, reds.get(i));
 		}
-		g.setColor(Color.black);
-		g.drawOval(whiteCell.getLocation().x, whiteCell.getLocation().y,
-				whiteCell.getSize(), whiteCell.getSize());
-		g.setColor(whiteCell.getColor());
-		g.fillOval(whiteCell.getLocation().x, whiteCell.getLocation().y,
-				whiteCell.getSize(), whiteCell.getSize());
+		drawCells(g, whiteCell);
 
+	}
+
+	public void drawCells(Graphics g, Cells cell) {
+		g.setColor(Color.black);
+		g.drawOval(cell.getLocation().x, cell.getLocation().y, cell.getSize(),
+				cell.getSize());
+		g.setColor(cell.getColor());
+		g.fillOval(cell.getLocation().x, cell.getLocation().y, cell.getSize(),
+				cell.getSize());
 	}
 
 	@Override
