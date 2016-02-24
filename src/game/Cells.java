@@ -2,9 +2,10 @@ package game;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Shape;
 import java.util.Random;
 
-public abstract class Cells implements Hitter {
+public abstract class Cells implements Hitter, Shape{
 	protected int xSpeed;
 	protected int ySpeed;
 	protected Random ran;
@@ -96,6 +97,18 @@ public abstract class Cells implements Hitter {
 	public void setLocation(Point point) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public boolean intersects(double x, double y, double w, double h) {
+		if(x >= place.getX() && x <= place.getX() + size && y >= place.getY() && y <= place.getY() + size){
+			didHit = true;
+		}else if(x + w >= place.getX() && x + w <= place.getX() + size && y + h >= place.getY() && y + h <= place.getY() + size){
+			didHit = true;
+		}else {
+			didHit = false;
+		}
+		
+		return didHit;
 	}
 
 }
