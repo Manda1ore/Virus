@@ -15,10 +15,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Cells[] redCells = new RedCells[20];
-	private Cells[] viruses = new Virus[10];
 	private ArrayList<Cells> reds = new ArrayList<Cells>();
 	private ArrayList<Cells> virus = new ArrayList<Cells>();
 	private Cells whiteCell;
+	private int nViruses = 10;
 
 	public BoardPanel(Difficulty d) {
 		setLayout(null);
@@ -28,7 +28,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	}
 
 	public void objectInfo(Difficulty d) {
-		for (int i = 0; i < viruses.length; i++) {
+		for (int i = 0; i < nViruses ; i++) {
 			virus.add(new Virus());
 			virus.get(i).setSize(d);
 			virus.get(i).setSpeed(d);
@@ -57,24 +57,18 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 				e.printStackTrace();
 			}
 			for (int l = 0; l < redCells.length; l++) {
-				for (int j = 0; j < redCells.length; j++) {
+				for (int j = 1; j < redCells.length; j++) {
 					// red collide with red
 					reds.get(j).setHit(reds.get(l).getCenterX(),
 							reds.get(l).getCenterY(), reds.get(l).getRadius());
-					for (int i = 0; i < viruses.length; i++) {
-						for (int c = 0; c < viruses.length; c++) {
+					for (int i = 0; i < nViruses; i++) {
+						for (int c = i; c < nViruses; c++) {
 							// virus collisions with virus
 							virus.get(c).intersects(
 									virus.get(c).getLocation().x,
 									virus.get(c).getLocation().y,
 									virus.get(c).getSize(),
 									virus.get(c).getSize());
-							// virus collide with player
-							virus.get(c).intersects(
-									whiteCell.getLocation().x,
-									whiteCell.getLocation().y,
-									whiteCell.getSize(),
-									whiteCell.getSize());
 
 						}
 						// red collide with virus
@@ -84,8 +78,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 								virus.get(i).getSize(),
 								virus.get(i).getSize());
 						// virus collide with red
-						virus.get(i).setHit(reds.get(j).getCenterX(),
-								reds.get(j).getCenterY(), 60);
+						virus.get(i).intersects(
+								reds.get(l).getLocation().x,
+								reds.get(l).getLocation().y,
+								reds.get(l).getSize(),
+								reds.get(l).getSize());
 						// virus collide with player
 						virus.get(i).intersects(
 								whiteCell.getLocation().x,
@@ -103,8 +100,21 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 				}
 				reds.get(l).move();
 			}
-			for (int j = 0; j < viruses.length; j++) {
+			for (int j = 0; j < nViruses; j++) {
 				virus.get(j).move();
+				
+				
+			}
+			for (int i = 0; i < nViruses; i++) {
+				if(virus.get(i).react()){
+					virus.remove(i);
+					nViruses--;
+					if(nViruses == 0){
+						objectInfo(Difficulty.EASY);
+						nViruses = 15;
+						
+					}
+				}
 			}
 			repaint();
 		}
@@ -114,7 +124,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		g.clearRect(0, 0, 2100, 1000);
 		g.setColor(new Color(158, 17, 74));
 		g.fillRect(0, 0, 2100, 1000);
-		for (int i = 0; i < viruses.length; i++) {
+		for (int i = 0; i < nViruses; i++) {
 			g.setColor(virus.get(i).getColor());
 			g.fillRect(virus.get(i).getLocation().x,
 					virus.get(i).getLocation().y, virus.get(i).getSize(), virus
