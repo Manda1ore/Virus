@@ -109,5 +109,5 @@ public abstract class Cells implements Hitter, Shape{
 		
 		return didHit;
 	}
-
+	public abstract String image();
 }

@@ -115,6 +115,12 @@ public class WhiteCell extends Cells{
 		return false;
 	}
 
+	@Override
+	public String image() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	 

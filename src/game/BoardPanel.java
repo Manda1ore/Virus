@@ -3,13 +3,20 @@ package game;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class BoardPanel extends JPanel implements MouseMotionListener {
@@ -23,13 +30,19 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	private Cells whiteCell;
 	private int nViruses = 10;
 	private int nBloodCells = 10;
-	Difficulty d;
+	private Difficulty d;
+	private long begin;
+	private int levelN;
+	private int roundN;
 	public BoardPanel(Difficulty d) {
+		levelN = 1;
+		roundN = 1;
+		begin = System.currentTimeMillis();
 		setLayout(null);
 		objectInfo(d);
 		this.setBounds(0, 0, 1925, 900);
 		this.addMouseMotionListener(this);
-		this.d = Difficulty.EASY;
+		this.d = d;
 	}
 
 	public void objectInfo(Difficulty d) {
@@ -74,7 +87,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 							collisions(virus.get(i), virus.get(c));
 						}
 						// red collide with virus
-						collisions(reds.get(j), virus.get(i));
+						collisions(reds.get(l), virus.get(i));
 						// virus collide with red
 						collisions(virus.get(i), reds.get(l));
 						// virus collide with player
@@ -94,10 +107,12 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	}
 
 	public void levelFactor(int i) {
+		
 		if (virus.get(i).react()) {
 			virus.remove(i);
-			if (virus.size() == 0) {
-				System.out.println("last virus caught");			
+			if (virus.size() == 0) {								
+				System.out.println("level:" + levelN);
+				levelN++;			
 				if (nViruses < 16) {
 					virus.removeAll(virus);
 					nViruses += 2;
@@ -107,6 +122,8 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 					nBloodCells += 3;
 					objectInfo(d);
 				} else if (nViruses >= 16 && nBloodCells >= 19){
+					roundN++;
+					System.out.println("Round:" + roundN);
 					difficultyIncrease();
 				} 
 			}
@@ -122,6 +139,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		}else if(d.equals(Difficulty.MEDIUM)){
 			d = Difficulty.HARD;
 		}else if(d.equals(Difficulty.HARD)){
+			System.currentTimeMillis();
+			long end = System.currentTimeMillis();
+			System.out.println("You win!");
+			System.out.println((end - begin)*.001 + "Seconds to win");
+			System.exit(0);
 		}
 		objectInfo(d);
 	}
@@ -136,10 +158,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		g.setColor(new Color(158, 17, 74));
 		g.fillRect(0, 0, 2100, 1000);
 		for (int i = 0; i < virus.size(); i++) {
-			g.setColor(virus.get(i).getColor());
-			g.fillRect(virus.get(i).getLocation().x,
-					virus.get(i).getLocation().y, virus.get(i).getSize(), virus
-							.get(i).getSize());
+			Image img = null;
+			img = new ImageIcon(this.getClass().getResource("/Images/virus.png")).getImage();
+			g.drawImage(img, virus.get(i).getLocation().x, virus.get(i).getLocation().y, null);
 		}
 		for (int i = 0; i < reds.size(); i++) {
 			drawCells(g, reds.get(i));

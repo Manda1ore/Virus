@@ -47,6 +47,7 @@ public class Virus extends Cells{
 			didHit = false;
 		}
 	}
+
 	@Override
 	public boolean react() {
 		// TODO Auto-generated method stub
@@ -96,6 +97,11 @@ public class Virus extends Cells{
 	public boolean intersects(Rectangle2D r) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	@Override
+	public String image() {
+		// TODO Auto-generated method stub
+		return "Images/virus.jpg";
 	}
 	
 

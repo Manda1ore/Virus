@@ -106,6 +106,12 @@ public class RedCells extends Cells {
 		return false;
 	}
 
+	@Override
+	public String image() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 
