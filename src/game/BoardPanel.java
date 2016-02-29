@@ -24,7 +24,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Cells[] redCells = new RedCells[20];
 	private ArrayList<Cells> reds = new ArrayList<Cells>();
 	private ArrayList<Cells> virus = new ArrayList<Cells>();
 	private Cells whiteCell;
@@ -142,7 +141,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 			System.currentTimeMillis();
 			long end = System.currentTimeMillis();
 			System.out.println("You win!");
-			System.out.println((end - begin)*.001 + "Seconds to win");
+			System.out.println(Math.round(((end - begin)*.001)/60) + " minutes to win");
 			System.exit(0);
 		}
 		objectInfo(d);
