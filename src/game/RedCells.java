@@ -34,19 +34,6 @@ public class RedCells extends Cells {
 	}
 
 	@Override
-	public void setHit(double centerY, double centerX, int radius) {
-		double distance = place.distance(centerX, centerY);
-		
-		if(distance <= this.radius + radius){
-//			xSpeed = -xSpeed;
-			didHit = true;			
-		}else{
-			didHit = false;
-		}
-				
-	}
-
-	@Override
 	public boolean react() {
 		// TODO Auto-generated method stub
 		return didHit;
@@ -70,11 +57,7 @@ public class RedCells extends Cells {
 		return false;
 	}
 
-	@Override
-	public boolean contains(double x, double y, double w, double h) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 	@Override
 	public Rectangle getBounds() {

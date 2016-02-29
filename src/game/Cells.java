@@ -10,13 +10,14 @@ public abstract class Cells implements Hitter, Shape{
 	protected int ySpeed;
 	protected Random ran;
 	protected Point place;
-	protected int size = 0;
+	protected int size;
 	protected int radius;
 	protected double centerX;
 	protected double centerY;
 	protected boolean didHit = false;
 
 	public Cells() {
+		size = 0;
 		ran = new Random();
 		setLocation();
 		radius = size / 2;
@@ -66,8 +67,7 @@ public abstract class Cells implements Hitter, Shape{
 
 	public abstract Color getColor();
 
-	public Point getLocation() {
-		
+	public Point getLocation() {		
 		return place;
 	}
 
@@ -94,8 +94,6 @@ public abstract class Cells implements Hitter, Shape{
 	}
 
 	public void setLocation(Point point) {
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public boolean intersects(double x, double y, double w, double h) {
@@ -107,6 +105,11 @@ public abstract class Cells implements Hitter, Shape{
 			didHit = false;
 		}
 		
+		return didHit;
+	}
+	
+	@Override
+	public boolean contains(double x, double y, double w, double h) {
 		return didHit;
 	}
 	public abstract String image();

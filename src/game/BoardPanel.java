@@ -67,7 +67,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		for (;;) {

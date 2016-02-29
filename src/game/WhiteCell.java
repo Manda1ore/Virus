@@ -10,7 +10,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-public class WhiteCell extends Cells{
+public class WhiteCell extends Cells {
 
 	@Override
 	public void setSize(Difficulty d) {
@@ -23,7 +23,7 @@ public class WhiteCell extends Cells{
 		} else {
 			size = 15;
 		}
-		
+
 	}
 
 	@Override
@@ -35,30 +35,23 @@ public class WhiteCell extends Cells{
 	public Color getColor() {
 		return Color.white;
 	}
-	
+
 	@Override
 	public void setSpeed(Difficulty d) {
-		
 	}
+
 	@Override
 	public void setLocation(Point p) {
 		place = new Point(p);
 	}
-	
+
 	public void setLocation() {
 		place = new Point(400, 500);
 	}
 
 	@Override
-	public void setHit(double centerY, double centerX, int radius) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean react() {
-		// TODO Auto-generated method stub
-		return false;
+		return didHit;
 	}
 
 	@Override
@@ -75,12 +68,6 @@ public class WhiteCell extends Cells{
 
 	@Override
 	public boolean contains(double x, double y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean contains(double x, double y, double w, double h) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -121,9 +108,4 @@ public class WhiteCell extends Cells{
 		return null;
 	}
 
-	
-
-	 
-	
-	
 }
