@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 public class Virus extends Cells{
 	
 	public Virus(){
-		
+		CellType type = CellType.VIRUS;
 	}
 	@Override
 	public int getSize() {
@@ -37,8 +37,11 @@ public class Virus extends Cells{
 	}
 
 	@Override
-	public boolean react() {
-		return didHit;
+	public void react(Cells cell) {
+		if(cell.equals(CellType.WHITE)){
+			
+		}
+		xSpeed = -xSpeed;
 	}
 	@Override
 	public boolean contains(Point2D p) {

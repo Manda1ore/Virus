@@ -33,7 +33,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	private long begin;
 	private int levelN;
 	private int roundN;
+	private int nCells;
 	public BoardPanel(Difficulty d) {
+		nCells = nViruses + nBloodCells + 1;
 		levelN = 1;
 		roundN = 1;
 		begin = System.currentTimeMillis();
@@ -75,38 +77,43 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			for (int j = 0; j < virus.size(); j++) {
+				levelFactor(j);
+			}
 			for (int l = 0; l < reds.size(); l++) {
-				for (int j = 1; j < reds.size(); j++) {
-					// red collide with red
-					collisions(reds.get(l), reds.get(j));
-					for (int i = 0; i < virus.size(); i++) {
-						for (int c = 1; c < virus.size(); c++) {
-							// virus collisions with virus
-							collisions(virus.get(i), virus.get(c));
-						}
-						// red collide with virus
-						collisions(reds.get(l), virus.get(i));
-						// virus collide with red
-						collisions(virus.get(i), reds.get(l));
-						// virus collide with player
-						collisions(virus.get(i), whiteCell);
-						// red collide with player
-						collisions(reds.get(l), whiteCell);
-						levelFactor(i);
-					}
-				}
+				collisionCheck(l);
 				reds.get(l).move();
 			}
 			for (int j = 0; j < virus.size(); j++) {
-				virus.get(j).move();
+				virus.get(j).move();	
 			}
 			repaint();
 		}
 	}
 
+	public void collisionCheck(int l) {
+		for (int j = 1; j < reds.size(); j++) {
+			// red collide with red
+			collisions(reds.get(l), reds.get(j));
+			for (int i = 0; i < virus.size(); i++) {
+				for (int c = 1; c < virus.size(); c++) {
+					// virus collisions with virus
+					collisions(virus.get(i), virus.get(c));
+				}
+				// red collide with virus
+				collisions(reds.get(l), virus.get(i));
+				// virus collide with red
+				collisions(virus.get(i), reds.get(l));
+				// red collide with player
+				collisions(reds.get(l), whiteCell);
+				
+			}
+		}
+	}
+
 	public void levelFactor(int i) {
-		
-		if (virus.get(i).react()) {
+		if (virus.get(i).intersects(whiteCell.getLocation().x, whiteCell.getLocation().y,
+				virus.get(i).getSize(), virus.get(i).getSize())) {
 			virus.remove(i);
 			if (virus.size() == 0) {								
 				System.out.println("level:" + levelN);
@@ -147,8 +154,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	}
 
 	public void collisions(Cells cell, Cells cell2) {
-		cell.intersects(cell2.getLocation().x, cell2.getLocation().y,
-				cell2.getSize(), cell2.getSize());
+		if(cell.intersects(cell2.getLocation().x, cell2.getLocation().y,
+				cell2.getSize(), cell2.getSize())){
+			cell.react(cell2);
+			cell2.react(cell);
+		}
 	}
 
 	public void paint(Graphics g) {

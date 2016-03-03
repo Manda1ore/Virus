@@ -9,7 +9,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class RedCells extends Cells {
-
+	public RedCells(){
+		CellType type = CellType.RED;
+	}
 	@Override
 	public void setSize(Difficulty d) {
 		if (d.equals(Difficulty.EASY)) {
@@ -34,9 +36,9 @@ public class RedCells extends Cells {
 	}
 
 	@Override
-	public boolean react() {
-		// TODO Auto-generated method stub
-		return didHit;
+	public void react(Cells cell) {
+		xSpeed = -xSpeed;
+		
 	}
 
 	@Override

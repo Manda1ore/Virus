@@ -11,7 +11,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class WhiteCell extends Cells {
-
+	public WhiteCell(){
+		CellType type = CellType.WHITE;
+	}
 	@Override
 	public void setSize(Difficulty d) {
 		if (d.equals(Difficulty.EASY)) {
@@ -50,8 +52,8 @@ public class WhiteCell extends Cells {
 	}
 
 	@Override
-	public boolean react() {
-		return didHit;
+	public void react(Cells cell) {
+		
 	}
 
 	@Override

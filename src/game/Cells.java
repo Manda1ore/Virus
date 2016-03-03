@@ -84,11 +84,6 @@ public abstract class Cells implements Hitter, Shape{
 		if (place.getLocation().y < 0) {
 			place.setLocation(place.getLocation().y, 900 - (getSize()));
 		}
-		if (react()){
-			xSpeed = -xSpeed;
-		}
-		centerX = place.getX() + radius;
-		centerY = place.getY() + radius;
 		place.translate(xSpeed, ySpeed);
 		
 	}
@@ -97,14 +92,10 @@ public abstract class Cells implements Hitter, Shape{
 	}
 	@Override
 	public boolean intersects(double x, double y, double w, double h) {
-		if(x >= place.getX() && x <= place.getX() + size && y >= place.getY() && y <= place.getY() + size){
+		didHit = false;
+		if(x+ size >= place.getX() + size && x <= place.getX() + size && y >= place.getY() && y <= place.getY() + size){
 			didHit = true;
-		}else if(x + w >= place.getX() && x + w <= place.getX() + size && y + h >= place.getY() && y + h <= place.getY() + size){
-			didHit = true;
-		}else {
-			didHit = false;
 		}
-		
 		return didHit;
 	}
 	
