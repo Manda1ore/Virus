@@ -12,7 +12,7 @@ import java.awt.geom.Rectangle2D;
 
 public class WhiteCell extends Cells {
 	public WhiteCell(){
-		CellType type = CellType.WHITE;
+		type = CellType.WHITE;
 	}
 	@Override
 	public void setSize(Difficulty d) {
@@ -53,7 +53,10 @@ public class WhiteCell extends Cells {
 
 	@Override
 	public void react(Cells cell) {
-		
+		if(cell.type().equals(CellType.RED)){
+			size--;
+			System.exit(0);
+		}
 	}
 
 	@Override
@@ -108,6 +111,11 @@ public class WhiteCell extends Cells {
 	public String image() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public CellType type() {
+		// TODO Auto-generated method stub
+		return type;
 	}
 
 }

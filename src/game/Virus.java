@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 public class Virus extends Cells{
 	
 	public Virus(){
-		CellType type = CellType.VIRUS;
+		type = CellType.VIRUS;
 	}
 	@Override
 	public int getSize() {
@@ -25,22 +25,11 @@ public class Virus extends Cells{
 
 	@Override
 	public void setSize(Difficulty d) {
-		if (d.equals(Difficulty.EASY)) {
-			size = 20;
-		} else if (d.equals(Difficulty.MEDIUM)) {
-			size = 15;
-		} else if (d.equals(Difficulty.HARD)) {
-			size = 10;
-		} else {
-			size = 20;
-		}		
+			size = 20;	
 	}
 
 	@Override
 	public void react(Cells cell) {
-		if(cell.equals(CellType.WHITE)){
-			
-		}
 		xSpeed = -xSpeed;
 	}
 	@Override
@@ -86,6 +75,11 @@ public class Virus extends Cells{
 	@Override
 	public String image() {
 		return "Images/virus.jpg";
+	}
+	@Override
+	public CellType type() {
+		// TODO Auto-generated method stub
+		return type;
 	}
 	
 

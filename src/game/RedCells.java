@@ -9,8 +9,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class RedCells extends Cells {
+	
 	public RedCells(){
-		CellType type = CellType.RED;
+		 type = CellType.RED;
 	}
 	@Override
 	public void setSize(Difficulty d) {
@@ -95,6 +96,11 @@ public class RedCells extends Cells {
 	public String image() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public CellType type() {
+		// TODO Auto-generated method stub
+		return type;
 	}
 
 	

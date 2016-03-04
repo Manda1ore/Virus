@@ -15,7 +15,7 @@ public abstract class Cells implements Hitter, Shape{
 	protected double centerX;
 	protected double centerY;
 	protected boolean didHit = false;
-
+	protected CellType type;
 	public Cells() {
 		size = 0;
 		ran = new Random();
@@ -103,5 +103,6 @@ public abstract class Cells implements Hitter, Shape{
 	public boolean contains(double x, double y, double w, double h) {
 		return didHit;
 	}
+	public abstract CellType type();
 	public abstract String image();
 }

@@ -3,7 +3,7 @@ package game;
 public class Starter {
 	private static Difficulty d;
 	public static void main(String[] args) {
-
+		
 		for (String difficulty : args) {
 			if(difficulty.equalsIgnoreCase(Difficulty.EASY.toString())){				
 				d = Difficulty.EASY;
