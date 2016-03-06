@@ -17,20 +17,35 @@ public class PrimaryFrame extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private Random ran = new Random();
-	public PrimaryFrame(Difficulty d) {
-		
+	public PrimaryFrame() {
+		Difficulty d = Difficulty.EASY;
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		BoardPanel p = new BoardPanel(d);
-		this.add(p);
+		Menu m = new Menu();
+		BoardPanel p = null;
+		System.out.println("start");
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
 			    cursorImg, new Point(0, 0), "blank cursor");
-		this.setCursor(blankCursor);
+		this.add(m);
 		this.setSize(2100, 1020);// 2100 width and 1020 height
 		this.setLayout(null);
+		
 		this.setVisible(true);// making the frame visible
+		
+		while(m.start()==Difficulty.DEFAULT){
+			System.out.println("Waiting");
+		}
+		this.remove(m);	
+		
+		p = new BoardPanel(m.start());
+		this.add(p);
+		this.setCursor(blankCursor);
 		p.animation();
+		
+		
+		
+		
+		
 		
 	}
 

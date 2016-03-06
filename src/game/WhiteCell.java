@@ -56,6 +56,8 @@ public class WhiteCell extends Cells {
 		if(cell.type().equals(CellType.RED)){
 			size--;
 			System.exit(0);
+		}else{
+			size++;
 		}
 	}
 
