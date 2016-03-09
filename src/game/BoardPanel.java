@@ -34,8 +34,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	private int levelN;
 	private int roundN;
 	private int nCells;
+	private Score score;
 
-	public BoardPanel(Difficulty d) {
+	public BoardPanel(Difficulty d, Score s) {
+		score = s;
 		nCells = nViruses + nBloodCells + 1;
 		levelN = 1;
 		roundN = 1;
@@ -72,7 +74,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		for (;;) {
+		while(whiteCell.getSize() > 0 || d.equals(Difficulty.HARD)&& reds.size() > 19) {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -117,9 +119,11 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 				whiteCell.getLocation().y, virus.get(i).getSize(),
 				virus.get(i).getSize())) {
 			virus.remove(i);
+			score.increaseScore(d);
 			if (virus.size() == 0) {
 				System.out.println("level:" + levelN);
 				levelN++;
+				score.levelincrease();
 				if (nViruses < 16) {
 					virus.removeAll(virus);
 					nViruses += 2;
@@ -151,7 +155,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 			System.out.println("You win!");
 			System.out.println(Math.round(((end - begin) * .001) / 60)
 					+ " minutes to win");
-			System.exit(0);
 		}
 		objectInfo(d);
 	}
@@ -166,7 +169,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, 2100, 1000);
-		g.setColor(new Color(158, 17, 74));
+		g.setColor(new Color(166, 61, 51));
 		g.fillRect(0, 0, 2100, 1000);
 		for (int i = 0; i < virus.size(); i++) {
 			Image img = null;

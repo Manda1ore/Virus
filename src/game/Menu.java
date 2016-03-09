@@ -21,7 +21,8 @@ public class Menu extends JPanel {
 		Button easy = new Button("Easy");
 		easy.setBounds(900, 350, 100, 40);// x axis, y axis, width, height
 		easy.setActionCommand("Easy");
-		easy.setBackground(Color.green);
+		easy.setForeground(Color.white);
+		easy.setBackground(new Color(204,38,19));
 		easy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -31,9 +32,10 @@ public class Menu extends JPanel {
 		});
 		this.add(easy);
 		Button medium = new Button("Medium");
-		medium.setBackground(Color.YELLOW);
+		medium.setBackground(new Color(127,14,0));
 		medium.setBounds(900, 390, 100, 40);// x axis, y axis, width, height
 		medium.setActionCommand("Medium");
+		medium.setForeground(Color.white);
 		medium.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -43,7 +45,8 @@ public class Menu extends JPanel {
 		});
 		this.add(medium);
 		Button hard = new Button("Hard");
-		hard.setBackground(Color.red);
+		hard.setBackground(new Color(76,8,0));
+		hard.setForeground(Color.white);
 		hard.setBounds(900, 430, 100, 40);// x axis, y axis, width, height
 		hard.setActionCommand("Hard");
 		hard.addActionListener(new ActionListener() {
@@ -59,7 +62,7 @@ public class Menu extends JPanel {
 		this.setVisible(true);
 	}
 	public void paint(Graphics g) {
-		g.setColor(new Color(158, 17, 74));
+		g.setColor(new Color(166, 61, 51));
 		g.fillRect(0, 0, 2100, 1000);
 
 	}	

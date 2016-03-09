@@ -55,7 +55,6 @@ public class WhiteCell extends Cells {
 	public void react(Cells cell) {
 		if(cell.type().equals(CellType.RED)){
 			size--;
-			System.exit(0);
 		}else{
 			size++;
 		}
