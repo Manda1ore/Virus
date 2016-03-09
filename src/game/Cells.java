@@ -15,7 +15,6 @@ public abstract class Cells implements Hitter, Shape{
 	protected Random ran;
 	protected Point place;
 	protected int size;
-	protected boolean didHit = false;
 	protected CellType type;
 	private int yBoundry;
 	private int xBoundry;
@@ -111,7 +110,7 @@ public abstract class Cells implements Hitter, Shape{
 	 * interface allowing for the cell to detect any cell that it touches
 	 */
 	public boolean intersects(double x, double y, double w, double h) {
-		didHit = false;
+		boolean didHit = false;
 		if(x+ size >= place.getX() + size && x <= place.getX() + size && y >= place.getY() && y <= place.getY() + size){
 			didHit = true;
 		}
