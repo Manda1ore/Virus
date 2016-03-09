@@ -28,7 +28,10 @@ public abstract class Cells implements Hitter, Shape{
 		centerX = getLocation().x + radius;
 		centerY = getLocation().y + radius;
 	}
-
+/**
+ * 
+ * @param d
+ */
 	public void setSpeed(Difficulty d) {
 		if (d.equals(Difficulty.EASY)) {
 			xSpeed = ran.nextInt(7) - 4;
@@ -44,19 +47,10 @@ public abstract class Cells implements Hitter, Shape{
 			ySpeed = ran.nextInt(10) + 1;
 		}
 	}
-
-	public int getRadius() {
-		return radius;
-	}
-
-	public double getCenterX() {
-		return centerX;
-	}
-
-	public double getCenterY() {
-		return centerY;
-	}
-
+/**
+ * 
+ * @param d
+ */
 	public abstract void setSize(Difficulty d);
 
 	public void setLocation() {
@@ -87,10 +81,16 @@ public abstract class Cells implements Hitter, Shape{
 		place.translate(xSpeed, ySpeed);
 		
 	}
-
+/**
+ * 
+ * @param point
+ */
 	public void setLocation(Point point) {
 	}
 	@Override
+	/**
+	 * 
+	 */
 	public boolean intersects(double x, double y, double w, double h) {
 		didHit = false;
 		if(x+ size >= place.getX() + size && x <= place.getX() + size && y >= place.getY() && y <= place.getY() + size){
@@ -100,6 +100,9 @@ public abstract class Cells implements Hitter, Shape{
 	}
 	
 	@Override
+	/**
+	 * 
+	 */
 	public boolean contains(double x, double y, double w, double h) {
 		return didHit;
 	}
