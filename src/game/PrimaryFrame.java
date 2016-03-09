@@ -16,7 +16,8 @@ import javax.swing.JFrame;
 public class PrimaryFrame extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	private Random ran = new Random();
+	private static final int PRIMARY_FRAME_WIDTH = 2100;
+	private static final int PRIMARY_FRAME_HEIGHT = 1020;
 	public PrimaryFrame() {
 		Difficulty d = Difficulty.EASY;
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -27,15 +28,14 @@ public class PrimaryFrame extends JFrame {
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
 			    cursorImg, new Point(0, 0), "blank cursor");
 		
-		this.setSize(2100, 1020);// 2100 width and 1020 height
+		this.setSize(PRIMARY_FRAME_WIDTH, PRIMARY_FRAME_HEIGHT);// 2100 width and 1020 height
 		this.setLayout(null);
-		
 		this.setVisible(true);// making the frame visible
 		while(true){
 			Menu m = new Menu();
 			this.add(m);
 			while(m.start()==Difficulty.DEFAULT){
-				System.out.println("Waiting");
+				System.out.println();
 			}
 			this.remove(m);	
 			Score s = new Score();

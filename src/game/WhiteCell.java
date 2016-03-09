@@ -11,7 +11,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class WhiteCell extends Cells {
-	public WhiteCell(){
+	public WhiteCell(int xBoundries, int yBoundries){
+		super(xBoundries, yBoundries);
 		type = CellType.WHITE;
 	}
 	@Override

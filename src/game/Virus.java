@@ -10,7 +10,8 @@ import java.awt.geom.Rectangle2D;
 
 public class Virus extends Cells{
 	
-	public Virus(){
+	public Virus(int xBoundries, int yBoundries){
+		super(xBoundries, yBoundries);
 		type = CellType.VIRUS;
 	}
 	@Override

@@ -26,7 +26,6 @@ public class Menu extends JPanel {
 		easy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Button clicked, anonymous inner class: " + LocalDateTime.now());
 				dif = Difficulty.EASY;
 			}
 		});
@@ -39,7 +38,6 @@ public class Menu extends JPanel {
 		medium.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Button clicked, anonymous inner class: " + LocalDateTime.now());
 				dif = Difficulty.MEDIUM;
 			}
 		});
@@ -52,7 +50,6 @@ public class Menu extends JPanel {
 		hard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Button clicked, anonymous inner class: " + LocalDateTime.now());
 				dif = Difficulty.HARD;
 			}
 		});

@@ -10,7 +10,8 @@ import java.awt.geom.Rectangle2D;
 
 public class RedCells extends Cells {
 	
-	public RedCells(){
+	public RedCells(int xBoundries, int yBoundries){
+		super(xBoundries,yBoundries);
 		 type = CellType.RED;
 	}
 	@Override

@@ -24,6 +24,9 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final int GAME_PANEL_WIDTH = 2100;
+	public static final int GAME_PANEL_HEIGHT = 1000;
+	public static final int INSIDE_PANEL_WIDTH = 1900;
 	private ArrayList<Cells> reds = new ArrayList<Cells>();
 	private ArrayList<Cells> virus = new ArrayList<Cells>();
 	private Cells whiteCell;
@@ -44,21 +47,21 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 		begin = System.currentTimeMillis();
 		setLayout(null);
 		objectInfo(d);
-		this.setBounds(0, 0, 1925, 900);
+		this.setBounds(0, 0, GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
 		this.addMouseMotionListener(this);
 		this.d = d;
 	}
 
 	public void objectInfo(Difficulty d) {
 		for (int i = 0; i < nViruses; i++) {
-			virus.add(new Virus());
+			virus.add(new Virus(INSIDE_PANEL_WIDTH,GAME_PANEL_HEIGHT));
 			cellSettings(d, virus.get(i));
 		}
 		for (int i = 0; i < nBloodCells; i++) {
-			reds.add(new RedCells());
+			reds.add(new RedCells(INSIDE_PANEL_WIDTH,GAME_PANEL_HEIGHT));
 			cellSettings(d, reds.get(i));
 		}
-		whiteCell = new WhiteCell();
+		whiteCell = new WhiteCell(INSIDE_PANEL_WIDTH,GAME_PANEL_HEIGHT);
 		whiteCell.setSize(d);
 
 	}
@@ -206,7 +209,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		whiteCell.setLocation(new Point(e.getX() - (whiteCell.getSize() / 2), e
 				.getY() - (whiteCell.getSize() / 2)));
-		whiteCell.setCenter();
 	}
 
 }
