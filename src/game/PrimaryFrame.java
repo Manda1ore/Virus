@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class PrimaryFrame extends JFrame {
 	
@@ -33,21 +34,21 @@ public class PrimaryFrame extends JFrame {
 		this.setVisible(true);// making the frame visible
 		while(true){
 			Menu m = new Menu(PRIMARY_FRAME_WIDTH, PRIMARY_FRAME_HEIGHT);
+			JLabel score = new JLabel("test");
 			this.add(m);
-			
+			Score s = new Score();
 			while(m.start()==Difficulty.DEFAULT){
-				System.out.println();
+				score.setText(s.playerScore());
 			}
 			System.out.println("menu loop");
-			Score s = new Score();
 			p = new BoardPanel(m.start(),s);
 			this.add(p);
 			this.setCursor(blankCursor);
 			this.remove(m);	
 			p.animation();
 			this.remove(p);
+			score.setText(s.playerScore());
 			this.setCursor(Cursor.DEFAULT_CURSOR);
-			System.out.println(s.playerScore());
 		}
 		
 		

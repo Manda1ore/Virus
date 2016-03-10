@@ -36,12 +36,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	private long begin;
 	private int levelN;
 	private int roundN;
-	private int nCells;
 	private Score score;
 
 	public BoardPanel(Difficulty d, Score s) {
 		score = s;
-		nCells = nViruses + nBloodCells + 1;
 		levelN = 1;
 		roundN = 1;
 		begin = System.currentTimeMillis();
@@ -102,7 +100,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 			// red collide with red
 			collisions(reds.get(l), reds.get(j));
 			for (int i = 0; i < virus.size(); i++) {
-				for (int c = 1; c < virus.size(); c++) {
+				for (int c = 0; c < virus.size(); c++) {
 					// virus collisions with virus
 					collisions(virus.get(c), virus.get(i));
 				}
@@ -123,6 +121,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 				virus.get(i).getSize())) {
 			virus.remove(i);
 			score.increaseScore(d);
+			System.out.println(score.playerScore());
 			if (virus.size() == 0) {
 				System.out.println("level:" + levelN);
 				levelN++;
@@ -167,6 +166,7 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 				cell2.getSize(), cell2.getSize())) {
 			cell.react(cell2);
 			cell2.react(cell);
+			
 		}
 	}
 
