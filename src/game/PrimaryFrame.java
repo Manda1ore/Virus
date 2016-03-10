@@ -18,8 +18,8 @@ public class PrimaryFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final int PRIMARY_FRAME_WIDTH = 2100;
 	private static final int PRIMARY_FRAME_HEIGHT = 1020;
+	@SuppressWarnings("deprecation")
 	public PrimaryFrame() {
-		Difficulty d = Difficulty.EASY;
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		BoardPanel p = null;
@@ -32,20 +32,23 @@ public class PrimaryFrame extends JFrame {
 		this.setLayout(null);
 		this.setVisible(true);// making the frame visible
 		while(true){
-			Menu m = new Menu();
+			Menu m = new Menu(PRIMARY_FRAME_WIDTH, PRIMARY_FRAME_HEIGHT);
 			this.add(m);
+			
 			while(m.start()==Difficulty.DEFAULT){
 				System.out.println();
 			}
-			this.remove(m);	
+			System.out.println("menu loop");
 			Score s = new Score();
 			p = new BoardPanel(m.start(),s);
 			this.add(p);
 			this.setCursor(blankCursor);
+			this.remove(m);	
 			p.animation();
+			this.remove(p);
+			this.setCursor(Cursor.DEFAULT_CURSOR);
 			System.out.println(s.playerScore());
 		}
-		
 		
 		
 		

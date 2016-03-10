@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class Menu extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Difficulty dif;
-	public Menu(){
+	public Menu(int frameWidth, int frameHeight){
 		repaint();
 		dif = Difficulty.DEFAULT;
 		Button easy = new Button("Easy");
@@ -54,7 +54,7 @@ public class Menu extends JPanel {
 			}
 		});
 		this.add(hard);
-		this.setSize(2100, 1020);// 2100 width and 1020 height
+		this.setSize(frameWidth, frameHeight);// 2100 width and 1020 height
 		this.setLayout(null);
 		this.setVisible(true);
 	}
