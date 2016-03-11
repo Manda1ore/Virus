@@ -1,16 +1,9 @@
 package game;
 
-import java.awt.Button;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.time.LocalDateTime;
-import java.util.Random;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 

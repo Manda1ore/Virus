@@ -1,22 +1,13 @@
 package game;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class BoardPanel extends JPanel implements MouseMotionListener {
@@ -34,14 +25,10 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 	private int nBloodCells = 10;
 	private Difficulty d;
 	private long begin;
-	private int levelN;
-	private int roundN;
 	private Score score;
 
 	public BoardPanel(Difficulty d, Score s) {
 		score = s;
-		levelN = 1;
-		roundN = 1;
 		begin = System.currentTimeMillis();
 		setLayout(null);
 		objectInfo(d);
@@ -123,8 +110,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 			score.increaseScore(d);
 			System.out.println(score.playerScore());
 			if (virus.size() == 0) {
-				System.out.println("level:" + levelN);
-				levelN++;
 				score.levelincrease();
 				if (nViruses < 16) {
 					virus.removeAll(virus);
@@ -135,8 +120,6 @@ public class BoardPanel extends JPanel implements MouseMotionListener {
 					nBloodCells += 3;
 					objectInfo(d);
 				} else if (nViruses >= 16 && nBloodCells >= 19) {
-					roundN++;
-					System.out.println("Round:" + roundN);
 					difficultyIncrease();
 				}
 			}
